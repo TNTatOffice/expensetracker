@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/NewExpense/NewExpense";
 
-function App() {
+const defaultExpenses = [
+  {
+    id: 1,
+    title: "Car Insurance",
+    amount: 300,
+    date: new Date(2020, 3, 12),
+  },
+  {
+    id: 2,
+    title: "Macbook Pro",
+    amount: 1000,
+    date: new Date(2020, 5, 15),
+  },
+  {
+    id: 3,
+    title: "IPad Pro",
+    amount: 700,
+    date: new Date(2020, 8, 17),
+  },
+  {
+    id: 4,
+    title: "Car",
+    amount: 150000,
+    date: new Date(2021, 6, 19),
+  },
+];
+
+export default function App() {
+  // Get default expenses in default state
+  const [expenses, setExpenses] = useState(defaultExpenses);
+
+  // get user added expense
+  const addExpenseHandler = (expense) => {
+    setExpenses((previousExpenses) => {
+      return [expense, ...previousExpenses];
+    });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NewExpense onAddExpenseHandler={addExpenseHandler} />
+      <Expenses expenses={expenses} />
     </div>
   );
 }
-
-export default App;
